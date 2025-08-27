@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\OperacionesController;
 use App\Http\Controllers\AdivinarOperacionesController;
 use App\Http\Controllers\FactorialrOperacionesController;
 use App\Http\Controllers\Tablas_MultiplicarOperacionesController;
@@ -10,6 +9,8 @@ use App\Http\Controllers\PromedioN_OperacionesController;
 use App\Http\Controllers\GenerarNumeros_OperacionesController;
 use App\Http\Controllers\Bonus_OperacionesController;
 use App\Http\Controllers\MenuPrincipal_OperacionesController;
+use App\Http\Controllers\OperacionesController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,12 +22,21 @@ use App\Http\Controllers\MenuPrincipal_OperacionesController;
 |
 */
 
-Route::get('suma/{num1}/{num2}', [OperacionesController::class, 'sumar']);
+
 
 //vista con archivo html
 Route::get('/inicio1', function () {
     return view('inicio1');
 });
+
+
+// vista de controlador de formula 
+Route::get('frmcuadratica/', [OperacionesController::class, 'frmcuadratica']);
+Route::post('cuadratica/', [OperacionesController::class, 'cuadratica'])->name('cudratica.calcular');
+
+
+
+
 
 // con vista GET
 Route::get('/suma', function () {
@@ -63,5 +73,12 @@ Route::post('numeros', [GenerarNumeros_OperacionesController::class, 'numeros'])
 Route::get('/frmbonus', [Bonus_OperacionesController::class, 'frmbonus']);
 Route::post('/bonus', [Bonus_OperacionesController::class, 'bonus']);
 
-
+// vista con html ara ver los ejercio en una sola pantalla
 Route::get('/menu', [MenuPrincipal_OperacionesController::class, 'index'])->name('menu.principal');
+
+
+
+// ejercios con conexion  de base datos para ejercios
+Route::get('categories', [CategoryControllerController::class, 'index'])->name('category.index');
+Route::get('category/create', [CategoryControllerController::class, 'create'])->name('category.create');
+Route::post('category/store', [CategoryControllerController::class, 'store'])->name('category.store');
